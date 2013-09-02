@@ -1,3 +1,4 @@
+include UsersHelper
 FactoryGirl.define do
   sequence(:email)    { |i| "email_#{i}@example.com" }
   sequence(:username) { |i| "user_#{i}" }
@@ -7,6 +8,7 @@ FactoryGirl.define do
     last_name  { Faker::Name.last_name }
     username
     email
+    score { 0 }
 
     factory :user_with_karma do
       ignore do
@@ -19,6 +21,10 @@ FactoryGirl.define do
         value_per = evaluator.total/evaluator.points
 
         create_list(:karma_point, points, :user => user, :value => value_per)
+      end
+
+      after :create do 
+        calculate_scores
       end
     end
   end

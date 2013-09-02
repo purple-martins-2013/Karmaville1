@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
 
   def self.by_karma
     User.order("score DESC")
-    # joins(:karma_points).group('users.id').order('SUM(karma_points.value) DESC')
   end
 
   def total_karma
